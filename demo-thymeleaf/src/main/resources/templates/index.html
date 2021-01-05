@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+    <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+    <div id="hello"></div>
+
+    <!-- 将放置React组件在这个div中 -->
+    <div id="like_button_container"></div>
+
+    <!-- 加载React. -->
+    <!-- 注意: 在生产环境部署时, 需要替换 "development.js" 为"production.min.js". -->
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+
+    <!-- 加载我们的 React组件. -->
+    <script src="like_button.js"></script>
+    <script type="text/babel">
+
+        function HelloMessage() {
+            return  <table>
+                <tr>
+                    <th>id</th>
+                    <th>姓名</th>
+                    <th>年龄</th>
+                </tr>
+                <tr th:each="student : ${students}">
+                    <td th:text="${student.id}">1</td>
+                    <td th:text="${student.studentName}">张三</td>
+                    <td th:text="${student.studentAge}">20</td>
+
+                </tr>
+            </table>
+
+        }
+
+
+        const element = <HelloMessage />
+
+
+
+        ReactDOM.render(
+            element,
+
+            document.getElementById('hello')
+        );
+
+
+
+    </script>
+</body>
+</html>
