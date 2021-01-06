@@ -11,6 +11,11 @@ package com.yss.student.dao;/***************************************************
  ********************************************************/
 
 
+
+import com.yss.student.entity.Teacher;
+
+import java.util.List;
+
 /**
  * 包名称：com.yss.student.dao
  * 类名称：TestMapper
@@ -19,5 +24,8 @@ package com.yss.student.dao;/***************************************************
  * 创建时间：2021/1/6/9:13
  */
 
-public class TestMapper {
+public interface TestMapper {
+
+     List<Teacher> selectAllTeacher();
+
 }

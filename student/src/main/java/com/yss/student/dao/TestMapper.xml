@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yss.student.dao.TestMapper">
+    <resultMap id="BaseResultMap" type="com.yss.student.entity.Teacher" >
+        <id column="teacher_id" property="teacherId" jdbcType="INTEGER" />
+        <result column="delete_flag" property="deleteFlag" jdbcType="BIGINT" />
+        <result column="create_id" property="createId" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_id" property="updateId" jdbcType="INTEGER" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="teacher_name" property="teacherName" jdbcType="VARCHAR" />
+        <result column="teacher_subject" property="teacherSubject" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="selectAllTeacher" resultMap="BaseResultMap" >
+
+        select * from teacher
+    </select>
+</mapper>

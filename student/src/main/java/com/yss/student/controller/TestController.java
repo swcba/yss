@@ -12,8 +12,14 @@ package com.yss.student.controller;/********************************************
 
 
 import com.yss.student.entity.StudentInformation;
+import com.yss.student.entity.Teacher;
 import com.yss.student.service.StudentService;
+import com.yss.student.service.TestService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -26,14 +32,26 @@ import java.util.List;
  * 创建时间：2020/12/30/17:25
  */
 @RestController
+@Api("测试接口")
+@RequestMapping("test")
 public class TestController {
 
     @Autowired
     private StudentService studentService;
 
+    @Autowired
+    private TestService testService;
+
     public List<StudentInformation> selectAllStudent(){
 
         return studentService.selectAllStudent();
+    }
+
+    @PostMapping
+    @ApiOperation("测试方法")
+    public List<Teacher> selectAllTeacher(){
+
+        return testService.selectAllTeacher();
     }
 
 }

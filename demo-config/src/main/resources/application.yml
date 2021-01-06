@@ -5,3 +5,10 @@ spring:
     config:
       server:
         git:
+          uri: https://github.com/swcba/yss.git
+          password: sw15197650636
+          searchPaths: demo-config
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1001/eureka/
