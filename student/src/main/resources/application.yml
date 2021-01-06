@@ -1,0 +1,24 @@
+server:
+  port: 8080
+
+spring:
+  devtools:
+    restart:
+      exclude:  static/**,public/**
+      enabled:  true
+  datasource:
+    name: mysql
+    url: jdbc:mysql://127.0.0.1:3307/student?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT
+    username: root
+    password: 941149
+    driver-class-name: com.mysql.jdbc.Driver
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath*:mapper/*.xml
+
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /api-docs
