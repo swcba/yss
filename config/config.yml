@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: config
+  profiles:
+    #active: dev,native
+    active: dev,git
+
+
+
