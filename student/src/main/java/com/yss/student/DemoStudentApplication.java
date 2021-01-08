@@ -6,6 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+/**
+ * @author: shiwei1
+ * @date: 2021/1/7/9:06
+ */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @MapperScan("com.yss.student")
 @EnableSwagger2

@@ -11,7 +11,7 @@ package com.yss.student.dao;/***************************************************
  ********************************************************/
 
 
-
+import com.yss.student.entity.StudentInformation;
 import com.yss.student.entity.Teacher;
 
 import java.util.List;
@@ -26,6 +26,29 @@ import java.util.List;
 
 public interface TestMapper {
 
-     List<Teacher> selectAllTeacher();
+    /**
+     * @Description: 查询所有老师
+     * @return: java.util.List<com.yss.student.entity.Teacher>
+     * @author: shiwei1
+     * @date: 2021/1/7/15:21
+     */
+    List<Teacher> selectAllTeacher();
 
+    /**
+     * @Description: 查询学生和他的班级信息
+     * @return: java.util.List<com.yss.student.entity.StudentInformation>
+     * @throws
+     * @author: shiwei1
+     * @date:  2021/1/7/16:28
+     */
+    List<StudentInformation> selectStudentAndClass();
+
+    /**
+     * @Description: 查询老师和他的学生
+     * @return: java.util.List<com.yss.student.entity.StudentInformation>
+     * @throws
+     * @author: shiwei1
+     * @date:  2021/1/7/16:28
+     */
+    List<StudentInformation> selectTeacherAndStudent();
 }

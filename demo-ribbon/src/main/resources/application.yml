@@ -1,0 +1,19 @@
+server:
+  port: 2005
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1001/eureka/
+spring:
+  application:
+    name: demo-client02
+  datasource:
+    name: mysql
+    url: jdbc:mysql://127.0.0.1:3307/student?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT
+    username: root
+    password: 941149
+    driver-class-name: com.mysql.jdbc.Driver
+
+demo-client01:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule

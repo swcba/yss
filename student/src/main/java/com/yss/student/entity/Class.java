@@ -1,8 +1,12 @@
 package com.yss.student.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+@Data
 public class Class implements Serializable {
     private Integer classId;
 
@@ -18,61 +22,22 @@ public class Class implements Serializable {
 
     private Long deleteFlag;
 
+
+
     private static final long serialVersionUID = 1L;
 
-    public Integer getClassId() {
-        return classId;
+    public Class() {
+
     }
 
-    public void setClassId(Integer classId) {
+    public Class(Integer classId, String className, Integer createId, Date createTime, Integer updateId, Date updateTime, Long deleteFlag) {
         this.classId = classId;
-    }
-
-    public String getClassName() {
-        return className;
-    }
-
-    public void setClassName(String className) {
-        this.className = className == null ? null : className.trim();
-    }
-
-    public Integer getCreateId() {
-        return createId;
-    }
-
-    public void setCreateId(Integer createId) {
+        this.className = className;
         this.createId = createId;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public Integer getUpdateId() {
-        return updateId;
-    }
-
-    public void setUpdateId(Integer updateId) {
         this.updateId = updateId;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-
-    public Long getDeleteFlag() {
-        return deleteFlag;
-    }
-
-    public void setDeleteFlag(Long deleteFlag) {
         this.deleteFlag = deleteFlag;
+
     }
 }

@@ -11,9 +11,62 @@
         <result column="teacher_name" property="teacherName" jdbcType="VARCHAR" />
         <result column="teacher_subject" property="teacherSubject" jdbcType="VARCHAR" />
     </resultMap>
+    <resultMap id="StudentResultMap" type="com.yss.student.entity.StudentInformation" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="delete_flag" property="deleteFlag" jdbcType="BIGINT" />
+        <result column="create_user_id" property="createUserId" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="student_name" property="studentName" jdbcType="VARCHAR" />
+        <result column="student_age" property="studentAge" jdbcType="INTEGER" />
+        <result column="grade" property="grade" jdbcType="VARCHAR" />
+            <association property="studentClass" javaType="com.yss.student.entity.Class">
+                <id column="class_id" property="classId" jdbcType="INTEGER" />
+                <result column="class_name" property="className" jdbcType="VARCHAR" />
+                <result column="create_id" property="createId" jdbcType="INTEGER" />
+                <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+                <result column="update_id" property="updateId" jdbcType="INTEGER" />
+                <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+                <result column="delete_flag" property="deleteFlag" jdbcType="BIGINT" />
+            </association>
+    </resultMap>
+
+    <resultMap id="TeacherResultMap" type="com.yss.student.entity.Teacher" >
+        <id column="teacher_id" property="teacherId" jdbcType="INTEGER" />
+        <result column="delete_flag" property="deleteFlag" jdbcType="BIGINT" />
+        <result column="create_id" property="createId" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_id" property="updateId" jdbcType="INTEGER" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="teacher_name" property="teacherName" jdbcType="VARCHAR" />
+        <result column="teacher_subject" property="teacherSubject" jdbcType="VARCHAR" />
+            <collection property="studentInformationList" ofType="com.yss.student.entity.StudentInformation">
+                <id column="id" property="id" jdbcType="INTEGER" />
+                <result column="delete_flag" property="deleteFlag" jdbcType="BIGINT" />
+                <result column="create_user_id" property="createUserId" jdbcType="VARCHAR" />
+                <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+                <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR" />
+                <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+                <result column="student_name" property="studentName" jdbcType="VARCHAR" />
+                <result column="student_age" property="studentAge" jdbcType="INTEGER" />
+                <result column="class_name" property="className" jdbcType="VARCHAR" />
+                <result column="grade" property="grade" jdbcType="VARCHAR" />
+            </collection>
+    </resultMap>
 
     <select id="selectAllTeacher" resultMap="BaseResultMap" >
 
         select * from teacher
+    </select>
+
+    <select id="selectStudentAndClass" resultMap="StudentResultMap">
+
+       select * from student_information si,class c,student_class sc where si.id=sc.student_id and c.class_id=sc.class_id
+    </select>
+
+    <select id="selectTeacherAndStudent" resultMap="TeacherResultMap">
+
+       select * from student_information si,teacher t,student_teacher st where si.id=st.student_id and t.teacher_id=st.teacher_id
     </select>
 </mapper>

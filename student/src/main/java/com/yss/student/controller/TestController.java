@@ -48,10 +48,26 @@ public class TestController {
     }
 
     @PostMapping
-    @ApiOperation("测试方法")
+    @ApiOperation("查找所有老师")
     public List<Teacher> selectAllTeacher(){
 
         return testService.selectAllTeacher();
+    }
+
+    @PostMapping("/student")
+    @ApiOperation("查找所有学生及班级信息")
+    public List<StudentInformation> selectStudentAndClass(){
+
+
+        return testService.selectStudentAndClass();
+    }
+
+    @PostMapping("/teacher")
+    @ApiOperation("查找所有老师及班级")
+    public List<StudentInformation> selectTeacherAndStudent(){
+
+
+        return testService.selectTeacherAndStudent();
     }
 
 }

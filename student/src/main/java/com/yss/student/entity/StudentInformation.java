@@ -1,8 +1,12 @@
 package com.yss.student.entity;
 
+import com.yss.student.vo.StudentUpdateVO;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
 
+@Data
 public class StudentInformation implements Serializable {
     private Integer id;
 
@@ -20,99 +24,42 @@ public class StudentInformation implements Serializable {
 
     private Integer studentAge;
 
-    private String className;
-
-    private String teacherName;
-
     private String grade;
+
+    private Class studentClass;
 
     private static final long serialVersionUID = 1L;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Long getDeleteFlag() {
-        return deleteFlag;
-    }
-
-    public void setDeleteFlag(Long deleteFlag) {
-        this.deleteFlag = deleteFlag;
-    }
-
-    public String getCreateUserId() {
-        return createUserId;
-    }
-
-    public void setCreateUserId(String createUserId) {
-        this.createUserId = createUserId == null ? null : createUserId.trim();
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getUpdateUserId() {
-        return updateUserId;
-    }
-
-    public void setUpdateUserId(String updateUserId) {
-        this.updateUserId = updateUserId == null ? null : updateUserId.trim();
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getStudentName() {
-        return studentName;
-    }
-
-    public void setStudentName(String studentName) {
-        this.studentName = studentName == null ? null : studentName.trim();
-    }
-
-    public Integer getStudentAge() {
-        return studentAge;
-    }
-
-    public void setStudentAge(Integer studentAge) {
+    public StudentInformation(Integer id,String studentName, Integer studentAge, String grade) {
+        this.id=id;
+        this.studentName = studentName;
         this.studentAge = studentAge;
+        this.grade = grade;
     }
 
-    public String getClassName() {
-        return className;
+    public StudentInformation() {
     }
 
-    public void setClassName(String className) {
-        this.className = className == null ? null : className.trim();
+    public StudentInformation(Integer id, Long deleteFlag, String createUserId, Date createTime, String updateUserId, Date updateTime, String studentName, Integer studentAge, String grade, Class studentClass) {
+        this.id = id;
+        this.deleteFlag = deleteFlag;
+        this.createUserId = createUserId;
+        this.createTime = createTime;
+        this.updateUserId = updateUserId;
+        this.updateTime = updateTime;
+        this.studentName = studentName;
+        this.studentAge = studentAge;
+        this.studentClass = studentClass;
+        this.grade = grade;
     }
 
-    public String getTeacherName() {
-        return teacherName;
-    }
 
-    public void setTeacherName(String teacherName) {
-        this.teacherName = teacherName == null ? null : teacherName.trim();
-    }
+    public void valueOfStudentUpdateVO(StudentUpdateVO studentUpdateVO){
 
-    public String getGrade() {
-        return grade;
-    }
+        this.studentName=studentUpdateVO.getStudentName();
+        this.studentAge=studentUpdateVO.getStudentAge();
 
-    public void setGrade(String grade) {
-        this.grade = grade == null ? null : grade.trim();
+        this.grade=studentUpdateVO.getGrade();
+
     }
 }

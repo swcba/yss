@@ -1,14 +1,28 @@
+
+
 spring:
   application:
     name: demo-config
   cloud:
     config:
       server:
+        #本地文件
+        native:
+          #用本地文件夹存储配置
+          search-locations: file:X:\\IDEA_file\\config
+        encrypt:
+          enabled: true
         git:
           uri: https://github.com/swcba/yss.git
+          username: swcba
           password: sw15197650636
-          searchPaths: demo-config
+          searchPaths: config
+          default-label: master
+          skip-ssl-validation: true
+
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:1001/eureka/
+server:
+  port: 2003

@@ -1,0 +1,9 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1001/eureka/
+server:
+  port: 2001
+spring:
+  application:
+    name: demo-client01

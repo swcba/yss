@@ -14,6 +14,7 @@ package com.yss.student.service;/***********************************************
 import com.yss.student.dao.StudentInformationMapper;
 import com.yss.student.entity.StudentInformation;
 import com.yss.student.entity.StudentInformationExample;
+import com.yss.student.vo.StudentUpdateVO;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,12 +62,9 @@ public class StudentService {
     public List<StudentInformation> selectStudentByDeleteFlag() {
         try {
             studentExample.createCriteria().andDeleteFlagEqualTo(1L);
-            if (studentInformationMapper.selectByExample(studentExample) == null) {
-                System.out.println("=============");
-                return null;
-            } else {
-                return studentInformationMapper.selectByExample(studentExample);
-            }
+
+            return studentInformationMapper.selectByExample(studentExample);
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -85,7 +83,7 @@ public class StudentService {
      * @author: shiwei1
      * @date: 2020/12/31/13:10
      */
-    public List<StudentInformation> selectStudentByID(int id) {
+    public List<StudentInformation> selectStudentById(int id) {
 
         try {
             studentExample.createCriteria().andIdEqualTo(id)
@@ -157,21 +155,27 @@ public class StudentService {
      * @return: int
      * @Date: 2020年12月30日/上午9:27:07
      */
-    public int deleteStudent(int id) {
+    public String deleteStudent(int id) {
         try {
             studentExample.createCriteria().andIdEqualTo(id);
+            List<StudentInformation> studentInformationList = selectStudentById(id);
 
-            StudentInformation studentInformation = selectStudentByID(id).get(0);
+            if (studentInformationList==null){
+                return "删除失败,id不存在";
+            }
+                StudentInformation studentInformation = selectStudentById(id).get(0);
 
-            studentInformation.setDeleteFlag(0L);
+                studentInformation.setDeleteFlag(0L);
 
-            return upadateStudentByName(studentInformation);
+                upadateStudentByName(studentInformation);
+                return "删除成功";
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             studentExample.clear();
         }
-        return 0;
+        return "服务繁忙!，请重试";
     }
 
 
@@ -195,7 +199,7 @@ public class StudentService {
     }
 
     /**
-     * @param studentName
+     * @param studentUpdateVO
      * @param
      * @return
      * @throws @author: shiwei1
@@ -204,31 +208,30 @@ public class StudentService {
      * @return: int
      * @Date: 2020年12月30日/上午9:36:52
      */
-    public int upadateStudentByName(String studentName, int age, int id) {
+    public String upadateStudent(StudentUpdateVO studentUpdateVO) {
         try {
             LocalDateTime localDateTime = LocalDateTime.now();
-            StudentInformation student = selectStudentByID(id).get(0);
+            StudentInformation student = selectStudentById(studentUpdateVO.getId()).get(0);
 
             if (student == null) {
-                return 0;
+                return "更新失败，学生不存在";
             } else {
-                student.setStudentName(studentName);
-                student.setStudentAge(age);
+                student.valueOfStudentUpdateVO(studentUpdateVO);
                 student.setUpdateTime(localDateTime.toDate());
-
-                return studentInformationMapper.updateByPrimaryKey(student);
+                studentInformationMapper.updateByPrimaryKey(student);
+                return "更改成功！";
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
         }
-        return 0;
+        return "系统繁忙，稍后再试";
     }
 
 
     /**
-     * @param studentName
+     * @param student
      * @param
      * @throws
      * @Title:
@@ -237,19 +240,17 @@ public class StudentService {
      * @author: shiwei1
      * @date: 2020/12/31/14:04
      */
-    public int insert(String studentName, Integer age, String teaherName, String grade) {
+    public int insert(StudentInformation student) {
+
+
         LocalDateTime localDateTime = LocalDateTime.now();
-        StudentInformation student = new StudentInformation();
         student.setCreateTime(localDateTime.toDate());
         student.setCreateUserId("1");
         student.setUpdateUserId("1");
         student.setUpdateTime(localDateTime.toDate());
         student.setDeleteFlag(1L);
-        student.setStudentName(studentName);
-        student.setStudentAge(age);
-        student.setClassName("1405");
-        student.setTeacherName(teaherName);
-        student.setGrade(grade);
+
+
         return studentInformationMapper.insert(student);
     }
 
@@ -263,11 +264,11 @@ public class StudentService {
      * @author: shiwei1
      * @date: 2021/1/4/11:53
      */
-    public List<StudentInformation> selectStudentByClassName(String className) {
+    /*public List<StudentInformation> selectStudentByClassName(String className) {
         studentExample.createCriteria().andClassNameEqualTo(className);
         return studentInformationMapper.selectByExample(studentExample);
 
-    }
+    }*/
 
     /**
      * @param startAge

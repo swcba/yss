@@ -1,0 +1,20 @@
+server:
+  port: 2002
+
+spring:
+  application:
+    name: demo-zuul
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1001/eureka/
+
+zuul:
+  routes:
+    api-a:
+      path: /api-a/**
+      serviceId: demo-client01
+    api-b:
+      path: /api-b/**
+      serviceId: demo-consumer

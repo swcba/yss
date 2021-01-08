@@ -12,6 +12,7 @@ package com.yss.student.service;/***********************************************
 
 
 import com.yss.student.dao.TestMapper;
+import com.yss.student.entity.StudentInformation;
 import com.yss.student.entity.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,4 +38,27 @@ public class TestService {
         return testMapper.selectAllTeacher();
     }
 
+
+    /**
+     * @Description: 查询所有学生及他们的班级信息
+     * @return: java.util.List<com.yss.student.entity.StudentInformation>
+     * @throws
+     * @author: shiwei1
+     * @date:  2021/1/7/16:35
+     */
+    public List<StudentInformation> selectStudentAndClass(){
+
+        return testMapper.selectStudentAndClass();
+    }
+    /**
+     * @Description: 查询所有老师及他们的学生信息
+     * @return: java.util.List<com.yss.student.entity.StudentInformation>
+     * @throws
+     * @author: shiwei1
+     * @date:  2021/1/7/16:35
+     */
+    public List<StudentInformation> selectTeacherAndStudent(){
+
+        return testMapper.selectTeacherAndStudent();
+    }
 }

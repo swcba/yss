@@ -16,9 +16,10 @@ package com.yss.student.controller;
 import java.util.List;
 
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.yss.student.entity.StudentInformation;
+import com.yss.student.service.StudentClassService;
+import com.yss.student.vo.StudentAddVO;
+import com.yss.student.vo.StudentUpdateVO;
 import io.swagger.annotations.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,12 +38,14 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "学生信息接口")
 @RestController
 @RequestMapping("/user")
-@CrossOrigin(origins = {"http://localhost:3000"},allowCredentials = "true",allowedHeaders = {"X-Custom-Header"},
-        maxAge = 3600L, methods={RequestMethod.GET,RequestMethod.POST,RequestMethod.HEAD})
+@CrossOrigin(origins = {"http://localhost:3000"}, allowCredentials = "true", allowedHeaders = {"X-Custom-Header"},
+        maxAge = 3600L, methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.HEAD})
 public class StuController {
 
     @Autowired
     private StudentService service;
+
+    private StudentClassService studentClassService;
 
 
     /**
@@ -59,7 +62,6 @@ public class StuController {
 
         return service.selectAllStudent();
     }
-
 
 
     /**
@@ -89,9 +91,9 @@ public class StuController {
     @PostMapping("/id")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "学生id", defaultValue = "1")})
-    public List<StudentInformation> selectStudentByID(@RequestParam String id) {
+    public List<StudentInformation> selectStudentById(@RequestParam String id) {
 
-        return service.selectStudentByID(Integer.valueOf(id));
+        return service.selectStudentById(Integer.valueOf(id));
     }
 
 
@@ -135,6 +137,21 @@ public class StuController {
     }
 
     /**
+     * @throws
+     * @Description: ${todo}(这里用一句话描述这个方法的作用)
+     * @return: java.util.List<com.yss.student.entity.StudentInformation>
+     * @author: shiwei1
+     * @date: 2021/1/7/11:36
+     */
+    @ApiOperation("根据姓名模糊查找学生接口2")
+    @PostMapping("/namelike2")
+    public List<StudentInformation> selectStudentNameByLike(@RequestBody @ApiParam(name = "StuentVO") StudentAddVO student) {
+
+        return service.selectStudentNameByLike(student.getStudentName());
+
+    }
+
+    /**
      * @param id
      * @return
      * @throws @author: shiwei1
@@ -147,7 +164,7 @@ public class StuController {
     @PostMapping("/deleteid")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "学生id", defaultValue = "1")})
-    public int deleteStudent(@RequestParam String id) {
+    public String deleteStudent(@RequestParam String id) {
 
 
         return service.deleteStudent(Integer.valueOf(id));
@@ -155,8 +172,7 @@ public class StuController {
     }
 
     /**
-     * @param studentName
-     * @param id
+     * @param studentUpdateVO
      * @return
      * @throws @author: shiwei1
      * @Title: upadateStudentByName
@@ -166,20 +182,14 @@ public class StuController {
      */
     @ApiOperation("更改学生信息接口")
     @PostMapping("/update")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "studentName", value = "学生姓名")
-            , @ApiImplicitParam(name = "age", value = "学生年龄")
-            , @ApiImplicitParam(name = "id", value = "学生id")})
-    public int upadateStudentByName(@RequestParam String studentName, @RequestParam String age, @RequestParam String id) {
-        System.out.println(id + "==============");
-        return service.upadateStudentByName(studentName, Integer.valueOf(age), Integer.valueOf(id));
+    public String upadateStudentByName(@RequestBody @ApiParam("更改学生信息") StudentUpdateVO studentUpdateVO) {
+
+        return service.upadateStudent(studentUpdateVO);
 
     }
 
 
     /**
-     * @param studentName
-     * @param age
      * @throws
      * @Title:
      * @Description: ${todo}(这里用一句话描述这个方法的作用)
@@ -189,16 +199,9 @@ public class StuController {
      */
     @ApiOperation("添加学生信息接口")
     @PostMapping("/insert")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "studentName", value = "学生姓名"),
-            @ApiImplicitParam(name = "age", value = "学生年龄", dataType = "Integer"),
-            @ApiImplicitParam(name = "teacher", value = "老师姓名"),
-            @ApiImplicitParam(name = "grade", value = "成绩")})
-    public int insertStudent(@RequestParam String studentName, @RequestParam Integer age,
-                             @RequestParam String teacherName, @RequestParam String grade) {
-
-
-        return service.insert(studentName, age, teacherName, grade);
+    public String insertStudent(@RequestBody @ApiParam(value = "添加学生") StudentAddVO studentAddVO) {
+        service.insert(studentAddVO.valueOfStudentInformation());
+        return "添加成功";
 
     }
 

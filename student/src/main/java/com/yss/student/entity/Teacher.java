@@ -1,8 +1,12 @@
 package com.yss.student.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+@Data
 public class Teacher implements Serializable {
     private Integer teacherId;
 
@@ -20,69 +24,22 @@ public class Teacher implements Serializable {
 
     private String teacherSubject;
 
+    private List<StudentInformation> studentInformationList;
+
     private static final long serialVersionUID = 1L;
 
-    public Integer getTeacherId() {
-        return teacherId;
+    public Teacher() {
     }
 
-    public void setTeacherId(Integer teacherId) {
+    public Teacher(Integer teacherId, Long deleteFlag, Integer createId, Date createTime, Integer updateId, Date updateTime, String teacherName, String teacherSubject, List<StudentInformation> studentInformationList) {
         this.teacherId = teacherId;
-    }
-
-    public Long getDeleteFlag() {
-        return deleteFlag;
-    }
-
-    public void setDeleteFlag(Long deleteFlag) {
         this.deleteFlag = deleteFlag;
-    }
-
-    public Integer getCreateId() {
-        return createId;
-    }
-
-    public void setCreateId(Integer createId) {
         this.createId = createId;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public Integer getUpdateId() {
-        return updateId;
-    }
-
-    public void setUpdateId(Integer updateId) {
         this.updateId = updateId;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-
-    public String getTeacherName() {
-        return teacherName;
-    }
-
-    public void setTeacherName(String teacherName) {
-        this.teacherName = teacherName == null ? null : teacherName.trim();
-    }
-
-    public String getTeacherSubject() {
-        return teacherSubject;
-    }
-
-    public void setTeacherSubject(String teacherSubject) {
-        this.teacherSubject = teacherSubject == null ? null : teacherSubject.trim();
+        this.teacherName = teacherName;
+        this.teacherSubject = teacherSubject;
+        this.studentInformationList = studentInformationList;
     }
 }

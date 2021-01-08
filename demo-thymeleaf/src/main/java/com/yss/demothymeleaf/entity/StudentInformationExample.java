@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 @Service
 public class StudentInformationExample {
     protected String orderByClause;
@@ -615,6 +614,76 @@ public class StudentInformationExample {
 
         public Criteria andStudentAgeNotBetween(Integer value1, Integer value2) {
             addCriterion("student_age not between", value1, value2, "studentAge");
+            return (Criteria) this;
+        }
+
+        public Criteria andGradeIsNull() {
+            addCriterion("grade is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGradeIsNotNull() {
+            addCriterion("grade is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGradeEqualTo(String value) {
+            addCriterion("grade =", value, "grade");
+            return (Criteria) this;
+        }
+
+        public Criteria andGradeNotEqualTo(String value) {
+            addCriterion("grade <>", value, "grade");
+            return (Criteria) this;
+        }
+
+        public Criteria andGradeGreaterThan(String value) {
+            addCriterion("grade >", value, "grade");
+            return (Criteria) this;
+        }
+
+        public Criteria andGradeGreaterThanOrEqualTo(String value) {
+            addCriterion("grade >=", value, "grade");
+            return (Criteria) this;
+        }
+
+        public Criteria andGradeLessThan(String value) {
+            addCriterion("grade <", value, "grade");
+            return (Criteria) this;
+        }
+
+        public Criteria andGradeLessThanOrEqualTo(String value) {
+            addCriterion("grade <=", value, "grade");
+            return (Criteria) this;
+        }
+
+        public Criteria andGradeLike(String value) {
+            addCriterion("grade like", value, "grade");
+            return (Criteria) this;
+        }
+
+        public Criteria andGradeNotLike(String value) {
+            addCriterion("grade not like", value, "grade");
+            return (Criteria) this;
+        }
+
+        public Criteria andGradeIn(List<String> values) {
+            addCriterion("grade in", values, "grade");
+            return (Criteria) this;
+        }
+
+        public Criteria andGradeNotIn(List<String> values) {
+            addCriterion("grade not in", values, "grade");
+            return (Criteria) this;
+        }
+
+        public Criteria andGradeBetween(String value1, String value2) {
+            addCriterion("grade between", value1, value2, "grade");
+            return (Criteria) this;
+        }
+
+        public Criteria andGradeNotBetween(String value1, String value2) {
+            addCriterion("grade not between", value1, value2, "grade");
             return (Criteria) this;
         }
     }
