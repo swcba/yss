@@ -19,6 +19,7 @@ import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -31,12 +32,17 @@ import java.util.List;
 @Service
 public class StudentService {
 
-    @Autowired
+    @Resource
     private StudentInformationMapper studentInformationMapper;
 
     @Autowired
     private StudentInformationExample studentExample;
 
+    @Autowired
+    private ClassService classService;
+
+    @Autowired
+    private StudentClassService studentClassService;
 
     /**
      * @Description: 查询所有学生
@@ -90,7 +96,6 @@ public class StudentService {
                     .andDeleteFlagEqualTo(1L);
 
             return studentInformationMapper.selectByExample(studentExample);
-
         } catch (Exception e) {
 
             e.printStackTrace();
@@ -160,16 +165,14 @@ public class StudentService {
             studentExample.createCriteria().andIdEqualTo(id);
             List<StudentInformation> studentInformationList = selectStudentById(id);
 
-            if (studentInformationList==null){
-                return "删除失败,id不存在";
+            if (studentInformationList.isEmpty()){
+                return "删除失败,学生不存在";
             }
-                StudentInformation studentInformation = selectStudentById(id).get(0);
-
+                StudentInformation studentInformation =studentInformationList.get(0);
                 studentInformation.setDeleteFlag(0L);
+                studentInformationMapper.updateByPrimaryKey(updateStudentTool(studentInformation));
 
-                upadateStudentByName(studentInformation);
                 return "删除成功";
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -184,18 +187,21 @@ public class StudentService {
      * @param
      * @throws
      * @Title:
-     * @Description: ${todo}(这里用一句话描述这个方法的作用)
+     * @Description: 设置学生数据创建更新的信息
      * @return: int
      * @author: shiwei1
      * @date: 2020/12/31/14:00
      */
-    private int upadateStudentByName(StudentInformation studentInformation) {
-
-
+    private StudentInformation updateStudentTool(StudentInformation studentInformation) {
         LocalDateTime localDateTime = LocalDateTime.now();
-        studentInformation.setUpdateTime(localDateTime.toDate());
 
-        return studentInformationMapper.updateByPrimaryKey(studentInformation);
+        if(studentInformation.getCreateUserId()==null){
+            studentInformation.setCreateUserId("1");
+            studentInformation.setCreateTime(localDateTime.toDate());
+        }
+        studentInformation.setUpdateTime(localDateTime.toDate());
+        studentInformation.setUpdateUserId("1");
+        return studentInformation;
     }
 
     /**
@@ -208,23 +214,19 @@ public class StudentService {
      * @return: int
      * @Date: 2020年12月30日/上午9:36:52
      */
-    public String upadateStudent(StudentUpdateVO studentUpdateVO) {
+    public String updateStudent(StudentUpdateVO studentUpdateVO) {
         try {
-            LocalDateTime localDateTime = LocalDateTime.now();
             StudentInformation student = selectStudentById(studentUpdateVO.getId()).get(0);
 
             if (student == null) {
                 return "更新失败，学生不存在";
-            } else {
-                student.valueOfStudentUpdateVO(studentUpdateVO);
-                student.setUpdateTime(localDateTime.toDate());
-                studentInformationMapper.updateByPrimaryKey(student);
-                return "更改成功！";
             }
+                student.valueOfStudentUpdateVO(studentUpdateVO);
+                studentInformationMapper.updateByPrimaryKey(updateStudentTool(student));
 
+                return "更改成功！";
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
         }
         return "系统繁忙，稍后再试";
     }
@@ -241,16 +243,6 @@ public class StudentService {
      * @date: 2020/12/31/14:04
      */
     public int insert(StudentInformation student) {
-
-
-        LocalDateTime localDateTime = LocalDateTime.now();
-        student.setCreateTime(localDateTime.toDate());
-        student.setCreateUserId("1");
-        student.setUpdateUserId("1");
-        student.setUpdateTime(localDateTime.toDate());
-        student.setDeleteFlag(1L);
-
-
         return studentInformationMapper.insert(student);
     }
 
@@ -264,11 +256,16 @@ public class StudentService {
      * @author: shiwei1
      * @date: 2021/1/4/11:53
      */
-    /*public List<StudentInformation> selectStudentByClassName(String className) {
-        studentExample.createCriteria().andClassNameEqualTo(className);
-        return studentInformationMapper.selectByExample(studentExample);
+    public List<StudentInformation> selectStudentByClassName(String className) {
+        //根据班级名称获取班级id
+        if (classService.selectClassByName(className)==null){
+            return null;
+        }
+        Integer classId = classService.selectClassByName(className).get(0).getClassId();
 
-    }*/
+        return studentInformationMapper.selectStudentAndClass(classId);
+
+    }
 
     /**
      * @param startAge
@@ -281,8 +278,14 @@ public class StudentService {
      * @date: 2021/1/4/11:59
      */
     public List<StudentInformation> selectStudentAgeBetween(int startAge, int endAge) {
-        studentExample.createCriteria().andStudentAgeBetween(startAge, endAge);
-        return studentInformationMapper.selectByExample(studentExample);
-
+        try {
+            studentExample.createCriteria().andStudentAgeBetween(startAge, endAge);
+            return studentInformationMapper.selectByExample(studentExample);
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            studentExample.clear();
+        }
+        return null;
     }
 }

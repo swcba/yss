@@ -59,7 +59,6 @@ public class StuController {
     @ApiOperation("查找所有学生接口")
     @GetMapping("/all")
     public List<StudentInformation> selectAllStudent() {
-
         return service.selectAllStudent();
     }
 
@@ -92,7 +91,6 @@ public class StuController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "学生id", defaultValue = "1")})
     public List<StudentInformation> selectStudentById(@RequestParam String id) {
-
         return service.selectStudentById(Integer.valueOf(id));
     }
 
@@ -111,8 +109,6 @@ public class StuController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "studentName", value = "姓名", defaultValue = " ")})
     public List<StudentInformation> selectStudentByName(@RequestParam String studentName) {
-
-
         return service.selectStudentByName(studentName);
 
     }
@@ -131,9 +127,7 @@ public class StuController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "studentName", value = "姓名", defaultValue = " ")})
     public List<StudentInformation> selectStudentNameByLike(@RequestParam String studentName) {
-
         return service.selectStudentNameByLike(studentName);
-
     }
 
     /**
@@ -146,9 +140,7 @@ public class StuController {
     @ApiOperation("根据姓名模糊查找学生接口2")
     @PostMapping("/namelike2")
     public List<StudentInformation> selectStudentNameByLike(@RequestBody @ApiParam(name = "StuentVO") StudentAddVO student) {
-
         return service.selectStudentNameByLike(student.getStudentName());
-
     }
 
     /**
@@ -165,10 +157,7 @@ public class StuController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "学生id", defaultValue = "1")})
     public String deleteStudent(@RequestParam String id) {
-
-
         return service.deleteStudent(Integer.valueOf(id));
-
     }
 
     /**
@@ -183,9 +172,7 @@ public class StuController {
     @ApiOperation("更改学生信息接口")
     @PostMapping("/update")
     public String upadateStudentByName(@RequestBody @ApiParam("更改学生信息") StudentUpdateVO studentUpdateVO) {
-
-        return service.upadateStudent(studentUpdateVO);
-
+        return service.updateStudent(studentUpdateVO);
     }
 
 
@@ -202,7 +189,6 @@ public class StuController {
     public String insertStudent(@RequestBody @ApiParam(value = "添加学生") StudentAddVO studentAddVO) {
         service.insert(studentAddVO.valueOfStudentInformation());
         return "添加成功";
-
     }
 
 
@@ -222,7 +208,13 @@ public class StuController {
             @ApiImplicitParam(name = "startAge", value = "起始年龄", defaultValue = "1", dataType = "Integer"),
             @ApiImplicitParam(name = "endAge", value = "终止年龄", defaultValue = "1", dataType = "Integer")})
     public List<StudentInformation> selectStudentAgeBetween(@RequestParam Integer startAge, @RequestParam Integer endAge) {
-
         return service.selectStudentAgeBetween(startAge, endAge);
+    }
+
+    @ApiOperation("查找班级的学生信息")
+    @PostMapping("/studentandclass")
+    @ApiImplicitParam(name = "className", value = "班级名称", defaultValue = "1405", dataType = "String")
+    public List<StudentInformation> selectStudentAndClass(@RequestParam String className){
+        return service.selectStudentByClassName(className);
     }
 }

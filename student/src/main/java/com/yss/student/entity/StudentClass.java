@@ -1,8 +1,11 @@
 package com.yss.student.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
 
+@Data
 public class StudentClass implements Serializable {
     private Integer id;
 
@@ -22,67 +25,24 @@ public class StudentClass implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public Integer getId() {
-        return id;
+    public StudentClass() {
     }
 
-    public void setId(Integer id) {
+    public StudentClass(Integer id, Integer studentId, Integer classId, Integer createId, Date createTime, Integer updateId, Date updateTime, Long deleteFlag) {
         this.id = id;
-    }
-
-    public Integer getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Integer studentId) {
         this.studentId = studentId;
+        this.classId = classId;
+        this.createId = createId;
+        this.createTime = createTime;
+        this.updateId = updateId;
+        this.updateTime = updateTime;
+        this.deleteFlag = deleteFlag;
     }
 
-    public Integer getClassId() {
-        return classId;
-    }
-
-    public void setClassId(Integer classId) {
+    public StudentClass(Integer id, Integer studentId, Integer classId) {
+        this.id = id;
+        this.studentId = studentId;
         this.classId = classId;
     }
 
-    public Integer getCreateId() {
-        return createId;
-    }
-
-    public void setCreateId(Integer createId) {
-        this.createId = createId;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Integer getUpdateId() {
-        return updateId;
-    }
-
-    public void setUpdateId(Integer updateId) {
-        this.updateId = updateId;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Long getDeleteFlag() {
-        return deleteFlag;
-    }
-
-    public void setDeleteFlag(Long deleteFlag) {
-        this.deleteFlag = deleteFlag;
-    }
 }

@@ -27,4 +27,6 @@ public interface StudentInformationMapper {
     int updateByPrimaryKeySelective(StudentInformation record);
 
     int updateByPrimaryKey(StudentInformation record);
+
+    List<StudentInformation> selectStudentAndClass(Integer classId);
 }

@@ -54,7 +54,7 @@ public class StudentInformation implements Serializable {
     }
 
 
-    public void valueOfStudentUpdateVO(StudentUpdateVO studentUpdateVO){
+    public void                                                                                                                                                                                                                              valueOfStudentUpdateVO(StudentUpdateVO studentUpdateVO){
 
         this.studentName=studentUpdateVO.getStudentName();
         this.studentAge=studentUpdateVO.getStudentAge();

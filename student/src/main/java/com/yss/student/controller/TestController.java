@@ -13,12 +13,16 @@ package com.yss.student.controller;/********************************************
 
 import com.yss.student.entity.StudentInformation;
 import com.yss.student.entity.Teacher;
+import com.yss.student.service.StudentClassService;
 import com.yss.student.service.StudentService;
 import com.yss.student.service.TestService;
+import com.yss.student.vo.StudentClassAddVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -42,32 +46,37 @@ public class TestController {
     @Autowired
     private TestService testService;
 
-    public List<StudentInformation> selectAllStudent(){
+    @Autowired
+    private StudentClassService studentClassService;
 
+    public List<StudentInformation> selectAllStudent(){
         return studentService.selectAllStudent();
     }
 
     @PostMapping
     @ApiOperation("查找所有老师")
     public List<Teacher> selectAllTeacher(){
-
         return testService.selectAllTeacher();
     }
 
     @PostMapping("/student")
     @ApiOperation("查找所有学生及班级信息")
     public List<StudentInformation> selectStudentAndClass(){
-
-
         return testService.selectStudentAndClass();
     }
 
     @PostMapping("/teacher")
     @ApiOperation("查找所有老师及班级")
     public List<StudentInformation> selectTeacherAndStudent(){
-
-
         return testService.selectTeacherAndStudent();
     }
+
+    @PostMapping("/insert")
+    @ApiOperation("添加学生班级信息")
+    public String insert(@RequestBody @ApiParam StudentClassAddVO studentClassAddVO){
+
+        return studentClassService.insertStudentClass(studentClassAddVO.valueOfStudentClass());
+    }
+
 
 }
