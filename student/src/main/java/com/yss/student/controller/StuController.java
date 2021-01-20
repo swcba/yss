@@ -18,7 +18,7 @@ import java.util.List;
 import com.yss.student.entity.StudentInformation;
 import com.yss.student.vo.StudentAddVO;
 import com.yss.student.vo.StudentUpdateVO;
-import com.yss.student.service.StudentService;
+import com.yss.student.service.impl.StudentServiceImpl;
 
 import io.swagger.annotations.*;
 
@@ -39,7 +39,7 @@ import javax.annotation.Resource;
         maxAge = 3600L, methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.HEAD})
 public class StuController {
     @Resource
-    private StudentService service;
+    private StudentServiceImpl service;
 
     @ApiOperation("查找所有学生接口")
     @GetMapping("/all")

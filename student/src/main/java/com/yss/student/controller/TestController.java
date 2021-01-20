@@ -13,8 +13,8 @@ package com.yss.student.controller;/********************************************
 
 import com.yss.student.entity.StudentInformation;
 import com.yss.student.entity.Teacher;
-import com.yss.student.service.StudentClassService;
-import com.yss.student.service.TestService;
+import com.yss.student.service.impl.StudentClassService;
+import com.yss.student.service.impl.TestService;
 import com.yss.student.vo.StudentClassAddVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

@@ -1,4 +1,4 @@
-package com.yss.student.service;
+package com.yss.student.service.impl;
 /****************************************************
  * 创建人：     @author shiwei1
  * 创建时间: 2020/12/31/12:28
@@ -17,9 +17,9 @@ import com.yss.student.entity.Class;
 import com.yss.student.entity.StudentClass;
 import com.yss.student.entity.StudentInformation;
 import com.yss.student.entity.StudentInformationExample;
+import com.yss.student.service.IStudentService;
 import com.yss.student.vo.StudentAddVO;
 import com.yss.student.vo.StudentUpdateVO;
-import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.*;
 import org.joda.time.LocalDateTime;
@@ -28,7 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
-import org.springframework.web.bind.annotation.PostMapping;
+
 
 import javax.annotation.Resource;
 
@@ -43,7 +43,7 @@ import java.util.List;
  * 创建时间：2020/12/31/12:28
  */
 @Service
-public class StudentService {
+public class StudentServiceImpl implements IStudentService {
 
     @Resource
     private StudentInformationMapper studentInformationMapper;
@@ -52,10 +52,10 @@ public class StudentService {
     private StudentInformationExample studentExample;
 
     @Resource
-    private ClassService classService;
+    private ClassServiceImpl classService;
 
     @Resource
-    private StudentClassService studentClassService;
+    private StudentClassServiceImpl studentClassService;
 
     @Resource
     private TestService testService;
@@ -86,27 +86,14 @@ public class StudentService {
         return studentInformationList;
     }
 
-    /**
-     * @Description: 查询所有学生
-     * @return: java.util.List<com.yss.student.entity.StudentInformation>
-     * @author: shiwei1
-     * @date: 2020/12/31/13:10
-     */
-    @PostMapping("/student")
-    @ApiOperation("查找所有学生及班级信息")
+
+    @Override
     public List<StudentInformation> selectStudentAndClass() {
         return testService.selectStudentAndClass();
     }
 
-    /**
-     * @param
-     * @throws
-     * @Title:
-     * @Description: 查询未被删除的学生
-     * @return: java.util.List<com.yss.student.entity.StudentInformation>
-     * @author: shiwei1
-     * @date: 2020/12/31/13:10
-     */
+
+    @Override
     public List<StudentInformation> selectStudentByDeleteFlag() {
         try {
             studentExample.createCriteria().andDeleteFlagEqualTo(1L);
@@ -122,15 +109,8 @@ public class StudentService {
     }
 
 
-    /**
-     * @param id
-     * @throws
-     * @Title:
-     * @Description: 根据id查找学生
-     * @return: java.util.List<com.yss.student.entity.StudentInformation>
-     * @author: shiwei1
-     * @date: 2020/12/31/13:10
-     */
+
+    @Override
     public List<StudentInformation> selectStudentById(int id) {
 
         try {
@@ -149,15 +129,7 @@ public class StudentService {
     }
 
 
-    /**
-     * @param name
-     * @return
-     * @throws @author: shiwei1
-     * @Title: selectStudentByName
-     * @Description: 根据学生姓名查找学生
-     * @return: List<StudentInformation>
-     * @Date: 2020年12月30日/上午9:18:47
-     */
+    @Override
     public List<StudentInformation> selectStudentByName(String name) {
         try {
             if (studentInformationMapper.selectStudentByName(name).isEmpty()) {
@@ -172,15 +144,8 @@ public class StudentService {
         return null;
     }
 
-    /**
-     * @param name
-     * @return
-     * @throws @author: shiwei1
-     * @Title: selectStudentByLike
-     * @Description: 根据学生姓名模糊查找学生
-     * @return: List<StudentInformation>
-     * @Date: 2020年12月30日/上午9:20:04
-     */
+
+    @Override
     public List<StudentInformation> selectStudentNameByLike(String name) {
         try {
             studentExample.createCriteria().andStudentNameLike( name + "%")
@@ -197,15 +162,8 @@ public class StudentService {
         return null;
     }
 
-    /**
-     * @param id
-     * @return
-     * @throws @author: shiwei1
-     * @Title: deleteStudent
-     * @Description: 更改deleteFlag删除学生
-     * @return: int
-     * @Date: 2020年12月30日/上午9:27:07
-     */
+
+    @Override
     public String deleteStudent(int id) {
         try {
             studentExample.createCriteria().andIdEqualTo(id);
@@ -251,16 +209,8 @@ public class StudentService {
         return studentInformation;
     }
 
-    /**
-     * @param studentUpdateVO
-     * @param
-     * @return
-     * @throws @author: shiwei1
-     * @Title: upadateStudentByName
-     * @Description: 更改学生信息
-     * @return: int
-     * @Date: 2020年12月30日/上午9:36:52
-     */
+
+    @Override
     public String updateStudent(StudentUpdateVO studentUpdateVO) {
         try {
             StudentInformation student = selectStudentById(studentUpdateVO.getId()).get(0);
@@ -279,16 +229,8 @@ public class StudentService {
     }
 
 
-    /**
-     * @param studentAddVO
-     * @param
-     * @throws
-     * @Title:
-     * @Description: 添加学生
-     * @return: int
-     * @author: shiwei1
-     * @date: 2020/12/31/14:04
-     */
+
+    @Override
     public String insert(StudentAddVO studentAddVO) {
         // 2.获取事务定义
         DefaultTransactionDefinition def = new DefaultTransactionDefinition();
@@ -327,15 +269,8 @@ public class StudentService {
     }
 
 
-    /**
-     * @param className
-     * @throws
-     * @Title:
-     * @Description: 根据班级查找学生
-     * @return: java.util.List<com.yss.student.entity.StudentInformation>
-     * @author: shiwei1
-     * @date: 2021/1/4/11:53
-     */
+
+    @Override
     public List<StudentInformation> selectStudentByClassName(String className) {
         //根据班级名称获取班级id
         if (classService.selectClassByName(className) == null) {
@@ -347,16 +282,8 @@ public class StudentService {
 
     }
 
-    /**
-     * @param startAge
-     * @param endAge
-     * @throws
-     * @Title:
-     * @Description: 查找某个年龄段的学生
-     * @return: java.util.List<com.yss.student.entity.StudentInformation>
-     * @author: shiwei1
-     * @date: 2021/1/4/11:59
-     */
+
+    @Override
     public List<StudentInformation> selectStudentAgeBetween(int startAge, int endAge) {
         try {
             studentExample.createCriteria().andStudentAgeBetween(startAge, endAge);

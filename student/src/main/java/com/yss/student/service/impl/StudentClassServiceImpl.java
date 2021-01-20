@@ -1,4 +1,4 @@
-package com.yss.student.service;/****************************************************
+package com.yss.student.service.impl;/****************************************************
  * 创建人：     @author shiwei1    
  * 创建时间: 2021/1/7/17:35
  * 项目名称：  demo-gateway
@@ -15,6 +15,7 @@ import com.yss.student.dao.ClassMapper;
 import com.yss.student.dao.StudentClassMapper;
 import com.yss.student.dao.StudentInformationMapper;
 import com.yss.student.entity.*;
+import com.yss.student.service.IStudentClassService;
 import org.joda.time.LocalDateTime;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,7 @@ import javax.annotation.Resource;
  */
 
 @Service
-public class StudentClassService {
+public class StudentClassServiceImpl implements IStudentClassService {
 
     @Resource
     private StudentClassExample studentClassExample;
@@ -51,13 +52,8 @@ public class StudentClassService {
     private StudentClassMapper studentClassMapper;
 
 
-    /**
-     * @throws
-     * @Description: 插入学生班级信息
-     * @return: int
-     * @author: shiwei1
-     * @date: 2021/1/7/17:42
-     */
+
+    @Override
     public String insertStudentClass(StudentClass studentClass) {
         try {
             studentClassExample.createCriteria().andStudentIdEqualTo(studentClass.getStudentId())
@@ -91,13 +87,7 @@ public class StudentClassService {
         return "系统繁忙";
     }
 
-    /**
-     * @throws
-     * @Description: 删除学生的班级信息
-     * @return:
-     * @author: shiwei1
-     * @date: 2021/1/7/17:55
-     */
+    @Override
     public String deleteStudentAndClass(StudentInformation studentInformation) {
         studentClassExample.createCriteria().andStudentIdEqualTo(studentInformation.getId()).andDeleteFlagEqualTo(1L);
         try {
@@ -125,7 +115,7 @@ public class StudentClassService {
      * @author: shiwei1
      * @date: 2021/1/8/11:31
      */
-    public StudentClass updateStudentClass(StudentClass studentClass) {
+    private StudentClass updateStudentClass(StudentClass studentClass) {
         LocalDateTime localDateTime = LocalDateTime.now();
 
         if (studentClass.getCreateId() == null) {
@@ -138,15 +128,8 @@ public class StudentClassService {
         return studentClass;
     }
 
-    /**
-     * @param studentId
-     * @throws
-     * @Title:
-     * @Description: 查找班级与学生的关系
-     * @return: com.yss.student.entity.StudentClass
-     * @author: shiwei1
-     * @date: 2021/1/18/15:10
-     */
+
+    @Override
     public StudentClass selectStudentClass(Integer studentId) {
         try {
             studentClassExample.createCriteria().andStudentIdEqualTo(studentId);
