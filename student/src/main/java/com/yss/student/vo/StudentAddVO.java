@@ -1,4 +1,5 @@
-package com.yss.student.vo;/****************************************************
+package com.yss.student.vo;
+/****************************************************
  * 创建人：     @author shiwei1    
  * 创建时间: 2021/1/7/10:25
  * 项目名称：  demo-gateway
@@ -38,6 +39,9 @@ public class StudentAddVO {
     @ApiModelProperty(value = "成绩")
     private  String grade;
 
+    @ApiModelProperty(value = "班级")
+    private  String className;
+
     /**
      * @Description: 将studentVO转换成StudentInformation
      * @return: com.yss.student.entity.StudentInformation
@@ -46,8 +50,7 @@ public class StudentAddVO {
      * @date:  2021/1/7/13:39
      */
     public  StudentInformation valueOfStudentInformation(){
-        StudentInformation studentInformation = new StudentInformation(null,studentName,studentAge,grade);
-        return studentInformation;
+        return new StudentInformation(null,studentName,studentAge,grade);
     }
     
 }

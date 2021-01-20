@@ -1,4 +1,5 @@
-package com.yss.demothymeleaf.service;/****************************************************
+package com.yss.demothymeleaf.service;
+/****************************************************
  * 创建人：     @author shiwei1    
  * 创建时间: 2020/12/31/12:28
  * 项目名称：  IDEA_workspace
@@ -44,7 +45,6 @@ public class StudentService {
      * @date: 2020/12/31/13:10
      */
     public List<StudentInformation> selectAllStudent() {
-
         return studentInformationMapper.selectByExample(null);
     }
 
@@ -58,7 +58,7 @@ public class StudentService {
      * @author: shiwei1
      * @date: 2020/12/31/13:10
      */
-    public List<StudentInformation> selectStudentByDelelteFlag() {
+    public List<StudentInformation> selectStudentByDeleteFlag() {
         try {
             studentExample.createCriteria().andDeleteFlagEqualTo(1L);
             if (studentInformationMapper.selectByExample(studentExample) == null) {
@@ -86,19 +86,17 @@ public class StudentService {
      * @date: 2020/12/31/13:10
      */
     public List<StudentInformation> selectStudentById(int id) {
-
         try {
             studentExample.createCriteria().andIdEqualTo(id)
                     .andDeleteFlagEqualTo(1L);
-
+            if(studentInformationMapper.selectByExample(studentExample)==null){
+                return  null;
+            }
             return studentInformationMapper.selectByExample(studentExample);
-
         } catch (Exception e) {
-
             e.printStackTrace();
         } finally {
             studentExample.clear();
-
         }
         return null;
     }
@@ -118,7 +116,9 @@ public class StudentService {
     public List<StudentInformation> selectStudentByName(String name) {
         try {
             studentExample.createCriteria().andStudentNameEqualTo(name);
-
+            if (studentInformationMapper.selectByExample(studentExample)==null){
+                return null;
+            }
             return studentInformationMapper.selectByExample(studentExample);
         } catch (Exception e) {
             e.printStackTrace();
@@ -140,7 +140,9 @@ public class StudentService {
     public List<StudentInformation> selectStudentNameByLike(String name) {
         try {
             studentExample.createCriteria().andStudentNameLike(name + "%");
-
+            if (studentInformationMapper.selectByExample(studentExample)==null){
+                return null;
+            }
             return studentInformationMapper.selectByExample(studentExample);
         } catch (Exception e) {
             e.printStackTrace();
@@ -167,7 +169,7 @@ public class StudentService {
 
             studentInformation.setDeleteFlag(0L);
 
-            return upadateStudentByName(studentInformation);
+            return updateStudentByName(studentInformation);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -187,9 +189,7 @@ public class StudentService {
      * @author: shiwei1
      * @date: 2020/12/31/14:00
      */
-    private int upadateStudentByName(StudentInformation studentInformation) {
-
-
+    private int updateStudentByName(StudentInformation studentInformation) {
         LocalDateTime localDateTime = LocalDateTime.now();
         studentInformation.setUpdateTime(localDateTime.toDate());
 
@@ -210,7 +210,6 @@ public class StudentService {
         try {
             LocalDateTime localDateTime = LocalDateTime.now();
             StudentInformation student = selectStudentById(id).get(0);
-
             if (student == null) {
                 return 0;
             } else {

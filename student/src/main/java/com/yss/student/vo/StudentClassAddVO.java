@@ -45,7 +45,6 @@ public class StudentClassAddVO {
      * @date:  2021/1/8/10:10
      */
     public StudentClass valueOfStudentClass(){
-        StudentClass studentClass = new StudentClass(null,studentId,classId);
-        return studentClass;
+        return new StudentClass(null,studentId,classId);
     }
 }

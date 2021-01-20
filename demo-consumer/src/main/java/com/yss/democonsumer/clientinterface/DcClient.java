@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @Date 2020/12/22
  */
 
-@FeignClient("demo-client02")
+@FeignClient("demo-client01")
 public interface DcClient {
 
-    @GetMapping("/dc")
+    @GetMapping("/user/dc")
     String consumer();
 
 }

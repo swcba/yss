@@ -14,7 +14,6 @@ package com.yss.student.service;/***********************************************
 import com.yss.student.dao.ClassMapper;
 import com.yss.student.entity.Class;
 import com.yss.student.entity.ClassExample;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -30,7 +29,7 @@ import java.util.List;
 @Service
 public class ClassService {
 
-    @Autowired
+    @Resource
     private ClassExample classExample;
 
     @Resource
@@ -43,7 +42,7 @@ public class ClassService {
      * @author: shiwei1
      * @date:  2021/1/8/15:07
      */
-    public List<Class> selectClassByName(String className){
+     List<Class> selectClassByName(String className){
         try {
             classExample.createCriteria().andClassNameEqualTo(className);
             if (classMapper.selectByExample(classExample).isEmpty()){
@@ -55,6 +54,27 @@ public class ClassService {
             e.printStackTrace();
         }finally {
             classExample.clear();
+        }
+        return null;
+    }
+
+    /**
+     * @Description: 根据id查找班级
+     * @return: java.util.List<com.yss.student.entity.Class>
+     * @throws
+     * @author: shiwei1
+     * @date:  2021/1/8/15:07
+     */
+    Class selectClassById(Integer classId){
+        try {
+
+            if (classMapper.selectByPrimaryKey(classId)==null){
+                return null;
+            }
+
+            return classMapper.selectByPrimaryKey(classId);
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return null;
     }

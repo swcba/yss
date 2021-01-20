@@ -6,6 +6,9 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author shiwei1
+ */
 @Data
 public class Teacher implements Serializable {
     private Integer teacherId;

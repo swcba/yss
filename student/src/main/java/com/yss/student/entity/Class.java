@@ -6,6 +6,9 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author shiwei1
+ */
 @Data
 public class Class implements Serializable {
     private Integer classId;
@@ -40,4 +43,5 @@ public class Class implements Serializable {
         this.deleteFlag = deleteFlag;
 
     }
+
 }

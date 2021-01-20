@@ -12,6 +12,8 @@ spring:
     username: root
     password: 941149
     driver-class-name: com.mysql.jdbc.Driver
+    druid:
+      default-auto-commit: true
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

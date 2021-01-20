@@ -5,6 +5,10 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+/**
+ * @author shiwei1
+ */
 @Service
 public class StudentInformationExample {
     protected String orderByClause;

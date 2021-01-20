@@ -16,9 +16,8 @@ import com.yss.student.dao.StudentClassMapper;
 import com.yss.student.dao.StudentInformationMapper;
 import com.yss.student.entity.*;
 import org.joda.time.LocalDateTime;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
+
 
 import javax.annotation.Resource;
 
@@ -33,13 +32,13 @@ import javax.annotation.Resource;
 @Service
 public class StudentClassService {
 
-    @Autowired
+    @Resource
     private StudentClassExample studentClassExample;
 
-    @Autowired
+    @Resource
     private StudentInformationExample studentInformationExample;
 
-    @Autowired
+    @Resource
     private ClassExample classExample;
 
     @Resource
@@ -50,6 +49,8 @@ public class StudentClassService {
 
     @Resource
     private StudentClassMapper studentClassMapper;
+
+
     /**
      * @throws
      * @Description: 插入学生班级信息
@@ -70,18 +71,18 @@ public class StudentClassService {
 
             //判断学生与班级信息是否存在
             if (studentInformationMapper.selectByExample(studentInformationExample).isEmpty()
-                    || classMapper.selectByExample(classExample).isEmpty() ) {
+                    || classMapper.selectByExample(classExample).isEmpty()) {
                 return "添加失败,学生或班级不存在";
-            }else if (!studentClassMapper.selectByExample(studentClassExample).isEmpty()){
+            } else if (!studentClassMapper.selectByExample(studentClassExample).isEmpty()) {
                 //判断该数据是否已经存在
                 return "添加失败，该学生信息已存在";
             }
 
             studentClassMapper.insert(updateStudentClass(studentClass));
-            return  "添加成功";
+            return "添加成功";
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             studentClassExample.clear();
             classExample.clear();
             studentInformationExample.clear();
@@ -91,13 +92,13 @@ public class StudentClassService {
     }
 
     /**
+     * @throws
      * @Description: 删除学生的班级信息
      * @return:
-     * @throws
      * @author: shiwei1
-     * @date:  2021/1/7/17:55
+     * @date: 2021/1/7/17:55
      */
-    public String deleteStudentAndClass(StudentInformation studentInformation){
+    public String deleteStudentAndClass(StudentInformation studentInformation) {
         studentClassExample.createCriteria().andStudentIdEqualTo(studentInformation.getId()).andDeleteFlagEqualTo(1L);
         try {
             if (studentClassMapper.selectByExample(studentClassExample).isEmpty()) {
@@ -108,9 +109,9 @@ public class StudentClassService {
             studentClassMapper.updateByPrimaryKey(updateStudentClass(studentClass));
 
             return "删除成功";
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             studentClassExample.clear();
         }
         return "系统繁忙";
@@ -118,16 +119,16 @@ public class StudentClassService {
 
 
     /**
+     * @throws
      * @Description: 设置生成时间与更新时间的信息
      * @return: com.yss.student.entity.StudentClass
-     * @throws
      * @author: shiwei1
-     * @date:  2021/1/8/11:31
+     * @date: 2021/1/8/11:31
      */
-    public StudentClass updateStudentClass(StudentClass studentClass){
+    public StudentClass updateStudentClass(StudentClass studentClass) {
         LocalDateTime localDateTime = LocalDateTime.now();
 
-        if(studentClass.getCreateId()==null){
+        if (studentClass.getCreateId() == null) {
             studentClass.setDeleteFlag(1L);
             studentClass.setCreateId(1);
             studentClass.setCreateTime(localDateTime.toDate());
@@ -136,4 +137,31 @@ public class StudentClassService {
         studentClass.setUpdateTime(localDateTime.toDate());
         return studentClass;
     }
+
+    /**
+     * @param studentId
+     * @throws
+     * @Title:
+     * @Description: 查找班级与学生的关系
+     * @return: com.yss.student.entity.StudentClass
+     * @author: shiwei1
+     * @date: 2021/1/18/15:10
+     */
+    public StudentClass selectStudentClass(Integer studentId) {
+        try {
+            studentClassExample.createCriteria().andStudentIdEqualTo(studentId);
+            if (studentClassMapper.selectByExample(studentClassExample).isEmpty()) {
+                return null;
+            }
+            return studentClassMapper.selectByExample(studentClassExample).get(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            studentClassExample.clear();
+        }
+        return null;
+    }
+
+
 }
+

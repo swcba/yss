@@ -1,4 +1,5 @@
-package com.yss.demothymeleaf.controller;/****************************************************
+package com.yss.demothymeleaf.controller;
+/****************************************************
  * 创建人：     @author shiwei1    
  * 创建时间: 2020/12/31/16:27
  * 项目名称：  IDEA_workspace
@@ -11,16 +12,13 @@ package com.yss.demothymeleaf.controller;/**************************************
  ********************************************************/
 
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.yss.demothymeleaf.entity.StudentInformation;
 import com.yss.demothymeleaf.service.StudentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -34,16 +32,14 @@ import java.util.List;
 @Controller
 public class IndexController {
 
-    @Autowired
+    @Resource
     private StudentService service;
 
     @RequestMapping("/index")
-    public String index(Model model, @RequestParam(defaultValue = "1") Integer page){
-        PageHelper.startPage(page,3);
+    public String index(Model model){
         List<StudentInformation> student = service.selectAllStudent();
-        PageInfo<StudentInformation> stuPageInfo = new PageInfo<StudentInformation>(student);
         model.addAttribute("students", student);
-        model.addAttribute("stuPageInfo", stuPageInfo);
+
         return "index";
     }
 

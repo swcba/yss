@@ -5,6 +5,9 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * @author shiwei1
+ */
 @Data
 public class StudentInformation implements Serializable {
     private Integer id;

@@ -54,8 +54,7 @@ public class StudentUpdateVO implements Serializable {
      * @date:  2021/1/7/13:39
      */
     public StudentInformation valueOfStudentInformation(){
-        StudentInformation studentInformation = new StudentInformation(id,studentName,studentAge,grade);
-        return studentInformation;
+        return new StudentInformation(id,studentName,studentAge,grade);
     }
 
 }

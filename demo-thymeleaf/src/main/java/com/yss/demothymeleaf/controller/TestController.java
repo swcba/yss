@@ -36,7 +36,6 @@ public class TestController {
 
     @GetMapping
     public List<StudentInformation> selectAllStudent(){
-
         return service.selectAllStudent();
     }
 }

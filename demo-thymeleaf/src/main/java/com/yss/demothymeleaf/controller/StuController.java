@@ -53,7 +53,6 @@ public class StuController {
     @ApiOperation("查找所有学生接口")
     @PostMapping("/all")
     public List<StudentInformation> selectAllStudent() {
-
         return service.selectAllStudent();
     }
 
@@ -68,7 +67,7 @@ public class StuController {
     @ApiOperation("查询未被刪除学生接口")
     @PostMapping("/allStudent")
     public List<StudentInformation> selectStudentByDelelteFlag() {
-        return service.selectStudentByDelelteFlag();
+        return service.selectStudentByDeleteFlag();
     }
 
     /**
@@ -85,7 +84,6 @@ public class StuController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "学生id", defaultValue = "1")})
     public List<StudentInformation> selectStudentById(@RequestParam String id) {
-
         return service.selectStudentById(Integer.valueOf(id));
     }
 
@@ -104,10 +102,7 @@ public class StuController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "studentName", value = "姓名", defaultValue = " ")})
     public List<StudentInformation> selectStudentByName(@RequestParam String studentName) {
-
-
         return service.selectStudentByName(studentName);
-
     }
 
     /**
@@ -124,9 +119,7 @@ public class StuController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "studentName", value = "姓名", defaultValue = " ")})
     public List<StudentInformation> selectStudentNameByLike(@RequestParam String studentName) {
-
         return service.selectStudentNameByLike(studentName);
-
     }
 
     /**
@@ -143,10 +136,7 @@ public class StuController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "学生id", defaultValue = "1")})
     public int deleteStudent(@RequestParam String id) {
-
-
         return service.deleteStudent(Integer.valueOf(id));
-
     }
 
     /**
@@ -165,10 +155,8 @@ public class StuController {
             @ApiImplicitParam(name = "studentName", value = "学生姓名")
             , @ApiImplicitParam(name = "age", value = "学生年龄")
             , @ApiImplicitParam(name = "id", value = "学生id")})
-    public int upadateStudentByName(@RequestParam String studentName, @RequestParam String age, @RequestParam String id) {
-        System.out.println(id+"==============");
+    public int upadateStudentByName(@RequestParam String studentName, @RequestParam String age, @RequestParam String id) { System.out.println(id+"==============");
         return service.upadateStudentByName(studentName, Integer.valueOf(age), Integer.valueOf(id));
-
     }
 
 
@@ -188,10 +176,7 @@ public class StuController {
             @ApiImplicitParam(name = "studentName", value = "学生姓名"),
             @ApiImplicitParam(name = "age", value = "学生年龄")})
     public int insertStudent(@RequestParam String studentName, @RequestParam String age) {
-
-
         return service.insert(studentName, Integer.valueOf(age));
-
     }
 
 }

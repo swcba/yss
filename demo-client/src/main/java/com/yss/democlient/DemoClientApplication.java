@@ -9,6 +9,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @date 2020/12/22
  */
 
+
 @EnableDiscoveryClient
 @SpringBootApplication(scanBasePackages = "com.yss.democlient")
 public class DemoClientApplication {
